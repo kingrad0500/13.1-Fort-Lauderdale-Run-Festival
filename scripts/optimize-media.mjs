@@ -113,9 +113,16 @@ const LOGO_SRC = 'assets/Photos/logos'
 const LOGO_OUT = 'public/media/logos'
 await mkdir(LOGO_OUT, { recursive: true })
 
+// .jpg included: the supplied Baptist Health full-colour mark is a JPEG with
+// no alpha. It is tightly cropped to the artwork, so it sits correctly on a
+// white tile — but it must never be placed on a dark one, where its lack of
+// transparency would show as a white box.
 const logoFiles = (await readdir(LOGO_SRC)).filter((f) =>
-  ['.png', '.svg'].includes(extname(f).toLowerCase()),
+  ['.png', '.jpg', '.jpeg', '.svg'].includes(extname(f).toLowerCase()),
 )
+// Note: "Baptist Health White.png" is the reversed-out presenting-partner mark
+// used in the header lockup over dark media. It kebabs to
+// baptist-health-white.png and is referenced by content/race.ts.
 
 console.log(`\n  Sponsor logos (${logoFiles.length}):`)
 for (const file of logoFiles) {

@@ -1878,4 +1878,17 @@ References are inspiration, not templates. The patterns deliberately *not* adopt
 | 29.7 | §14 Desktop header | Transparent-over-hero behavior replaced by a floating navy pill, solid from first paint on all pages | The inset hero places the header on sand rather than over media, so transparency is unnecessary — and removing it eliminates text-contrast-over-video risk |
 | 29.8 | §4 Color-use principles | Coastal Sand established as the default page background; white demoted to a card surface; navy reserved as punctuation | All five references use warm neutral backgrounds; achieved entirely within the approved palette |
 
+**Revision 2 — July 29, 2026.** The project owner supplied the presenting partner's reversed-out logo and a navigation reference (Shamrock Run Fest), and asked for the header to carry the full event title with the presenting partner, at full screen width.
+
+This revision REVERSES parts of revision 1 and, in doing so, returns closer to the brief's original §14. That is deliberate, not drift: the floating pill existed only because an inset hero placed the header on sand. Once the header goes full-width over media, the original transparent-then-solid behaviour is the correct one again.
+
+| # | Section | Change | Reason |
+|---:|---|---|---|
+| 29.9 | §14 Desktop header | Floating navy pill replaced by a FULL-WIDTH bar: transparent over the homepage hero, solid Atlantic Navy after scrolling, solid immediately on interior pages. This restores the original §14 wording that §29.7 had amended away | Owner direction; the pill could not carry a nine-word title plus a partner lockup |
+| 29.10 | §14, §4 | Header identity is now a stacked wordmark — *Liquid Youth Fort Lauderdale / Running Festival* — with a separate "presented by" lockup carrying the Baptist Health mark | Measured: at 1440px the bar leaves 496px for a wordmark; the single-line title needs 578px at 22px. Stacking is the only way to keep the name legible AND show the partner |
+| 29.11 | §12.3 | Baptist Health is shown in the header as presenting partner. Liquid Youth remains inside the event name as title sponsor | §12.3 hierarchy: the two tiers are not interchangeable and must not be levelled |
+| 29.12 | §7.1 | Homepage hero is now FULL-BLEED and overlaid by the header, reversing §29.4's inset frame. Interior page heroes stay inset | A full-width nav above an inset hero reads disconnected. Interior pages keep the inset frame because their header is solid, which gives the separation the homepage gets from the media itself |
+| 29.13 | §17 top bar | Restyled as a stationary ticker — dark bar, letterspaced caps, bullet separators — carrying the date, distances, venue and the active lifecycle message | The reference uses a scrolling marquee; the motion was NOT adopted. §7.2 forbids sliders for critical schedule information and §25 requires schedules stay stationary. It would also have been the third animated element on the homepage |
+| 29.14 | §14 | Desktop navigation links now appear at 1280px rather than 1024px | Measured: the wider identity lockup wrapped the header to 108px at 1024px and 88px at 1280px. The header is now a fixed height and the links wait for room |
+
 Per §26.7, this brief was updated before implementation planning continued. The corresponding technical detail lives in `website-plan.md`.

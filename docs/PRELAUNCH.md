@@ -78,7 +78,17 @@ npm run check:lifecycle            # separate: rebuilds per mode
 ### Blocking
 
 1. **Event logo** — header, footer and 404 currently use a `13.1` text mark.
-2. **Sponsor logo files** — all nine render as styled text.
+2. **Sponsor logos — supplied and in place.** All nine appear on the homepage
+   strips and the Community partners wall. Two notes carried forward, neither
+   blocking:
+   - **WildSide** — pale cream script, so it sits on a navy panel rather than a
+     white one (client-directed). A dark/colour version would let the wall be
+     uniform: drop the file in and set `tile: 'light'` in `content/sponsors.ts`.
+   - **Running Wild** — "RUNNING" and the "FT. LAUDERDALE, FL" tagline are
+     white with a thin outline, so they read weakly on a white panel. The
+     cheetah and red "WILD" carry the mark. Worth requesting a light-safe
+     version alongside WildSide's.
+
 3. **`finisher.jpg` sign-off** — shows Cleveland Clinic and Life Time branding
    from 2019 against a 2026 Liquid Youth title sponsorship. Deliberately unused.
 4. **Domain** — `siteUrl` defaults to `https://www.131fortlauderdale.com`. Set

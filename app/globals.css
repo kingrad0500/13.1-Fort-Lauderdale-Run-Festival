@@ -59,6 +59,15 @@
   --shadow-raised: 0 4px 12px rgb(16 35 62 / 0.08), 0 16px 40px rgb(16 35 62 / 0.08);
   --shadow-nav: 0 2px 12px rgb(16 35 62 / 0.1);
 
+  /* Header height. The homepage hero pulls itself up by this so the
+     transparent nav overlays the media instead of sitting above it.
+     The header is a FIXED height (h-[4.5rem] / sm:h-[5rem] in Header.tsx) and
+     this token mirrors it exactly. It used to be content-driven, which let the
+     bar wrap taller at tight widths and desync from this value — leaving a
+     sliver of page background visible between the ticker and the hero. Keep
+     the two in lockstep. */
+  --header-h: 4.5rem;
+
   /* --- Motion. Brief §25: energy without theatrics. --- */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -68,11 +77,17 @@
    ========================================================================== */
 
 @layer base {
+  @media (min-width: 768px) {
+    :root {
+      --header-h: 5rem;
+    }
+  }
+
   html {
     scroll-behavior: smooth;
     /* Sticky page indexes and anchored sections must not hide behind the
        floating header (brief §8.2, §9, §13). */
-    scroll-padding-top: 6.5rem;
+    scroll-padding-top: 7rem;
     -webkit-text-size-adjust: 100%;
   }
 

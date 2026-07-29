@@ -5,24 +5,26 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { primaryNav } from '@/content/navigation'
 import { RegisterButton } from '@/components/ui/RegisterButton'
+import { Brandmark } from './Brandmark'
 import { MobileMenu } from './MobileMenu'
 import { cn } from '@/lib/cn'
 
 /**
- * Floating navy pill header. Brief §14 (revised, §29.7).
+ * Full-width header. Brief §14.
  *
- * Solid from first paint on every page including the homepage. The inset hero
- * (§7.1) places this on sand rather than over moving media, so there is no
- * transparent state to manage and no contrast-over-video risk. On scroll it
- * gains only a shadow.
+ * This REPLACES the floating navy pill from §29.7 and, in doing so, returns to
+ * the brief's original §14 behaviour: transparent over the homepage hero,
+ * becoming solid Atlantic Navy after scrolling; solid immediately on interior
+ * pages.
  *
- * Dropdown behaviour (§14): "must work with mouse, keyboard, and touch. They
- * must not depend on hover alone." Implemented as click/focus-driven with
- * hover as an enhancement — Escape closes, focus returns to the trigger, and
- * focus leaving the group closes it.
+ * The pill existed because an inset hero put the header on sand, which removed
+ * the risk of text sitting over moving video. Going full-width brings that risk
+ * back, so the hero carries a dedicated top scrim (see HeroMedia) and the
+ * result is MEASURED — scripts/check-contrast.mjs samples the nav region as
+ * well as the headline.
  *
- * Active page indicator (§14) does not rely on colour alone: it carries an
- * underline and aria-current.
+ * Dropdown behaviour is unchanged (§14): click/focus driven with hover as an
+ * enhancement, Escape closes and returns focus, never hover-only.
  */
 export function Header() {
   const pathname = usePathname()
@@ -32,14 +34,17 @@ export function Header() {
   const navRef = useRef<HTMLElement>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  // Only the homepage has media directly beneath the header.
+  const overHero = pathname === '/'
+  const solid = !overHero || scrolled
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
+    const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close any dropdown on route change.
   useEffect(() => {
     setOpenMenu(null)
     setMobileOpen(false)
@@ -58,7 +63,6 @@ export function Header() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [openMenu])
 
-  // Clicking outside closes.
   useEffect(() => {
     if (!openMenu) return
     function onPointerDown(e: PointerEvent) {
@@ -72,52 +76,39 @@ export function Header() {
     return pathname === href || pathname.startsWith(`${href}/`)
   }
 
-  function cancelClose() {
+  const cancelClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current)
   }
-
-  function scheduleClose() {
+  const scheduleClose = () => {
     cancelClose()
     closeTimer.current = setTimeout(() => setOpenMenu(null), 120)
   }
 
-  // The pill floats, but the strip it sits in must be opaque enough to hide
-  // page content scrolling through the gutters beside and above it — without
-  // this, stray glyphs from the section below show in the gap around the pill.
-  // A frosted sand strip keeps the floating look (the page background is sand
-  // anyway) while reading as a deliberate surface over white sections. Same
-  // treatment as StickyIndex, so the two read as one system.
   return (
-    <header className="sticky top-0 z-50 bg-sand/80 pb-3 pt-3 backdrop-blur-md sm:pt-4">
-      <div className="page-shell">
-        <nav
-          ref={navRef}
-          aria-label="Primary"
-          className={cn(
-            'flex items-center justify-between gap-4',
-            'rounded-[var(--radius-pill)] bg-navy px-4 py-2.5 sm:px-5 sm:py-3',
-            'transition-shadow duration-300',
-            scrolled
-              ? 'shadow-[var(--shadow-raised)] backdrop-blur-sm'
-              : 'shadow-[var(--shadow-nav)]',
-          )}
-        >
-          {/* Event logo. Real mark pending — client action item 1. */}
-          <Link
-            href="/"
-            className="flex min-h-[44px] shrink-0 items-center gap-2 rounded-[var(--radius-pill)] px-1 py-1"
-            aria-label="Fort Lauderdale Running Festival — home"
-          >
-            <span className="font-numeric text-2xl leading-none text-gold">13.1</span>
-            <span className="hidden font-sans text-[0.8125rem] font-bold leading-tight text-sand sm:block">
-              FORT
-              <br />
-              LAUDERDALE
-            </span>
-          </Link>
+    <header
+      className={cn(
+        'sticky top-0 z-50 w-full transition-colors duration-300',
+        solid
+          ? 'border-b border-white/10 bg-navy shadow-[var(--shadow-nav)]'
+          : 'bg-transparent',
+      )}
+    >
+      <nav
+        ref={navRef}
+        aria-label="Primary"
+        className={cn(
+          // FIXED height, matching --header-h exactly. Content-driven height
+          // let the bar wrap and grow at tight widths (108px at 1024, 88px at
+          // 1280), which desynced the hero overlay and exposed a sliver of
+          // page background. flex-nowrap makes overflow impossible to hide.
+          'page-shell flex h-[4.5rem] flex-nowrap items-center justify-between',
+          'gap-2 sm:gap-4 md:h-[5rem] md:gap-6',
+        )}
+      >
+        <Brandmark className="min-w-0" />
 
-          {/* Desktop navigation */}
-          <ul className="hidden items-center gap-0.5 lg:flex">
+        <div className="flex shrink-0 items-center gap-2">
+          <ul className="hidden items-center gap-0.5 xl:flex">
             {primaryNav.map((item) => {
               const active = isActive(item.href)
               const hasChildren = Boolean(item.children?.length)
@@ -130,11 +121,11 @@ export function Header() {
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
                       className={cn(
-                        'inline-flex min-h-[44px] items-center rounded-[var(--radius-pill)] px-3 py-2',
+                        'inline-flex min-h-[44px] items-center rounded-[var(--radius-pill)] px-2.5 py-2 2xl:px-3',
                         'font-sans text-sm font-semibold text-sand/85 transition-colors',
                         'hover:bg-white/10 hover:text-sand',
-                        // Not colour alone: an underline marks the active page.
-                        active && 'text-sand underline decoration-gold decoration-2 underline-offset-[6px]',
+                        active &&
+                          'text-sand underline decoration-gold decoration-2 underline-offset-[6px]',
                       )}
                     >
                       {item.label}
@@ -161,10 +152,11 @@ export function Header() {
                     aria-haspopup="true"
                     onClick={() => setOpenMenu(open ? null : item.label)}
                     className={cn(
-                      'inline-flex min-h-[44px] items-center gap-1.5 rounded-[var(--radius-pill)] px-3 py-2',
+                      'inline-flex min-h-[44px] items-center gap-1.5 rounded-[var(--radius-pill)] px-2.5 py-2 2xl:px-3',
                       'font-sans text-sm font-semibold text-sand/85 transition-colors',
                       'hover:bg-white/10 hover:text-sand',
-                      active && 'text-sand underline decoration-gold decoration-2 underline-offset-[6px]',
+                      active &&
+                        'text-sand underline decoration-gold decoration-2 underline-offset-[6px]',
                     )}
                   >
                     {item.label}
@@ -184,11 +176,7 @@ export function Header() {
                       id={`nav-menu-${item.label}`}
                       onMouseEnter={cancelClose}
                       onMouseLeave={scheduleClose}
-                      className={cn(
-                        'absolute left-0 top-[calc(100%+0.5rem)] min-w-[15rem]',
-                        'rounded-[var(--radius-card)] border border-white/10 bg-navy p-2',
-                        'shadow-[var(--shadow-raised)]',
-                      )}
+                      className="absolute left-0 top-[calc(100%+0.5rem)] min-w-[15rem] rounded-[var(--radius-card)] border border-white/10 bg-navy p-2 shadow-[var(--shadow-raised)]"
                     >
                       <ul>
                         <li>
@@ -217,27 +205,24 @@ export function Header() {
             })}
           </ul>
 
-          {/* Register + mobile trigger */}
-          <div className="flex shrink-0 items-center gap-2">
-            <RegisterButton source="header" className="min-h-[44px] px-5 text-sm">
-              Register
-            </RegisterButton>
+          <RegisterButton source="header" size="sm">
+            Register
+          </RegisterButton>
 
-            <button
-              type="button"
-              onClick={() => setMobileOpen(true)}
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-menu"
-              className="inline-flex size-11 items-center justify-center rounded-[var(--radius-pill)] text-sand hover:bg-white/10 lg:hidden"
-            >
-              <span className="sr-only">Open menu</span>
-              <span aria-hidden="true" className="text-xl leading-none">
-                ☰
-              </span>
-            </button>
-          </div>
-        </nav>
-      </div>
+          <button
+            type="button"
+            onClick={() => setMobileOpen(true)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            className="inline-flex size-11 items-center justify-center rounded-[var(--radius-pill)] text-sand hover:bg-white/10 xl:hidden"
+          >
+            <span className="sr-only">Open menu</span>
+            <span aria-hidden="true" className="text-xl leading-none">
+              ☰
+            </span>
+          </button>
+        </div>
+      </nav>
 
       <MobileMenu
         open={mobileOpen}

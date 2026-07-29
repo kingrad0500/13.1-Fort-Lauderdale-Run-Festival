@@ -113,12 +113,11 @@ export function HeroVideo({
           onClick={toggle}
           aria-pressed={!playing}
           className={cn(
-            // Top-right at EVERY size, with matching top padding reserved on
-            // the hero content. Corner-positioning alone is not enough: below
-            // lg the content fills the frame, so a bottom-right control lands
-            // on the micro-reassurance line and a top-right one lands on the
-            // eyebrow. Only reserving the space actually separates them.
-            'absolute right-5 top-5 z-[3]',
+            // Bottom-right. It was top-right while the hero was inset, but the
+            // header now overlays the media full-bleed and the top-right corner
+            // belongs to the Register button. The hero content reserves matching
+            // bottom padding so this never lands on the reassurance line.
+            'absolute bottom-5 right-5 z-[3]',
             'inline-flex min-h-[44px] min-w-[44px]',
             'items-center justify-center gap-2 rounded-[var(--radius-pill)]',
             'border border-sand/30 bg-navy/60 px-4 backdrop-blur-sm',

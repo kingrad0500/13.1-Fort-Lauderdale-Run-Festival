@@ -54,6 +54,39 @@ export const event = {
   },
   addressDisplay: '3000 E Las Olas Blvd, Fort Lauderdale, FL 33316',
   contactEmail: 'info@131FortLauderdale.com',
+
+  /**
+   * Header wordmark, split across two lines.
+   *
+   * The full title does not fit on one line beside the navigation: measured at
+   * 1440px the bar leaves 496px for a wordmark once the links and Register
+   * button are placed, and the single-line title needs 578px at 22px type
+   * (473px at 18px, which is too small to act as a primary identity). Stacking
+   * it lets the name read at a proper size and still leaves room for the
+   * presenting-partner lockup.
+   */
+  wordmark: {
+    /**
+     * Title sponsor, shown as artwork rather than type (§20 keeps them inside
+     * the official event name). Reversed-out mark — the header is navy or sits
+     * over dark media, never a light surface.
+     */
+    sponsorLogo: '/media/logos/liquid-youth-white.png',
+    sponsorName: 'Liquid Youth',
+    place: 'Fort Lauderdale',
+    event: 'Running Festival',
+  },
+
+  /**
+   * Presenting partner. Brief §12.3 places Baptist Health South Florida as
+   * "Presenting and medical partner", distinct from Liquid Youth, who are the
+   * TITLE sponsor and therefore named inside the event title itself.
+   */
+  presentedBy: {
+    name: 'Baptist Health',
+    /** Reversed-out mark, for use on navy and over dark media. */
+    logoWhite: '/media/logos/baptist-health-white.png',
+  },
 } as const
 
 export const distances: Distance[] = [

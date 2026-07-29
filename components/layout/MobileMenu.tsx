@@ -99,7 +99,7 @@ export function MobileMenu({
 
   return (
     <div
-      className="fixed inset-0 z-[60] lg:hidden"
+      className="fixed inset-0 z-[60] xl:hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Site menu"

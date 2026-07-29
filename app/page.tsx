@@ -44,15 +44,20 @@ export default function HomePage() {
       {/* ============================================================
           1. Hero — §7.1 (revised §29.4)
           ============================================================ */}
-      <section className="page-shell pt-4">
+      {/* Full-bleed, and pulled up by exactly the header height so the
+          transparent nav sits ON the media rather than above it. The inner
+          padding gives the content that height back, so nothing hides behind
+          the bar. */}
+      <section className="-mt-[var(--header-h)]">
         <HeroMedia
           poster={heroImage}
           video="/media/runners-poster.jpg"
           priority
+          fullBleed
           alt="Runners along A1A in Fort Lauderdale at sunrise, palm trees and race banners lining the road"
-          className="min-h-[34rem] sm:min-h-[38rem] lg:min-h-[80vh]"
+          className="min-h-[36rem] sm:min-h-[40rem] lg:min-h-[88vh]"
         >
-          <div className="flex min-h-[34rem] flex-col justify-end p-7 pt-24 sm:min-h-[38rem] sm:p-12 sm:pt-24 lg:min-h-[80vh] lg:p-16 lg:pt-24">
+          <div className="page-shell flex min-h-[36rem] flex-col justify-end pb-24 pt-[calc(var(--header-h)+2rem)] sm:min-h-[40rem] sm:pb-20 lg:min-h-[88vh] lg:pb-20">
             <div className="max-w-4xl">
               <div className="motion-safe:animate-[hero-enter_0.6s_var(--ease-out-soft)_both]">
                 <EyebrowLabel tone="inverse">

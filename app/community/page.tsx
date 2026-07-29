@@ -78,7 +78,7 @@ export default function CommunityPage() {
           title="The people behind the race"
           lede="A 20th running takes more than a start line. These organisations make race weekend possible."
         />
-        <SponsorWall className="mt-12" />
+        <SponsorWall logos className="mt-12" />
       </Section>
 
       {/* ============================================================

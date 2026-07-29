@@ -38,7 +38,7 @@ interface Props {
   distance?: DistanceSlug
   children?: React.ReactNode
   variant?: Variant
-  size?: 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg'
   /** Stretches to the container width — used inside cards. */
   block?: boolean
   /** Appended for screen readers, e.g. "for the Two-Person Relay". */
@@ -75,9 +75,14 @@ export function RegisterButton({
           ? 'inline'
           : 'inline-flex items-center justify-center rounded-[var(--radius-pill)]',
         variant !== 'inline' &&
-          (size === 'md'
-            ? 'min-h-[48px] px-6 text-[0.9375rem]'
-            : 'min-h-[52px] px-8 text-base'),
+          {
+            // Compact header size. Padding tightens below sm, where the bar has
+            // to hold the sponsor mark, the event name, this button and the
+            // menu trigger inside 288px.
+            sm: 'min-h-[44px] px-3 text-sm sm:px-5',
+            md: 'min-h-[48px] px-6 text-[0.9375rem]',
+            lg: 'min-h-[52px] px-8 text-base',
+          }[size],
         block && 'w-full',
         variant === 'solid' &&
           'bg-coral text-navy shadow-[var(--shadow-card)] hover:bg-coral-dark',

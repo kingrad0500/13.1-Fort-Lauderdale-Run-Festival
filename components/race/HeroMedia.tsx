@@ -24,6 +24,7 @@ export function HeroMedia({
   alt,
   video = null,
   priority = false,
+  fullBleed = false,
   className,
   children,
 }: {
@@ -35,14 +36,18 @@ export function HeroMedia({
    */
   video?: string | null
   priority?: boolean
+  /** Edge-to-edge with square corners, for the overlaid homepage hero. */
+  fullBleed?: boolean
   className?: string
   children?: React.ReactNode
 }) {
   return (
     <div
       className={cn(
-        'relative isolate overflow-hidden rounded-[var(--radius-hero)]',
-        'bg-navy shadow-[var(--shadow-raised)]',
+        'relative isolate overflow-hidden bg-navy',
+        fullBleed
+          ? ''
+          : 'rounded-[var(--radius-hero)] shadow-[var(--shadow-raised)]',
         className,
       )}
     >
@@ -66,6 +71,21 @@ export function HeroMedia({
       )}
 
       <Scrim intensity={video ? 'light' : 'default'} />
+
+      {/*
+        Extra top scrim, full-bleed only. The nav now sits ON the media, and
+        the brightest part of this clip is the sky at the top of frame — the
+        main scrim is weakest exactly there because it ramps from the bottom.
+        Without this the nav links and the reversed-out Baptist Health mark
+        lose contrast. Verified by scripts/check-contrast.mjs, which samples
+        the nav region as well as the headline.
+      */}
+      {fullBleed && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-40 bg-gradient-to-b from-navy/85 via-navy/45 to-transparent"
+        />
+      )}
 
       <div className="relative z-[2]">{children}</div>
     </div>

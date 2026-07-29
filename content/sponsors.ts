@@ -52,13 +52,17 @@ export const sponsors: Sponsor[] = [
     id: 'baptist-health',
     name: 'Baptist Health South Florida',
     tier: 'presenting',
-    logo: 'baptist-health.png',
+    // Client-specified full-colour mark. Sourced from a JPEG, so it has no
+    // transparency — safe on a light tile only. The reversed-out
+    // baptist-health-white.png is the one used in the header over dark media.
+    logo: 'bh-full-color.png',
     tile: 'light',
     url: null,
     role: 'Presenting and medical partner',
   },
-    // White wordmark — unreadable on a light tile.
-  { id: 'visit-lauderdale', name: 'Visit Lauderdale', tier: 'partner', logo: 'visit-lauderdale.png', tile: 'dark', url: null },
+    // Client-supplied colour version. This REPLACES the white-wordmark file,
+  // which was unreadable on a light tile — the colour mark works on both.
+  { id: 'visit-lauderdale', name: 'Visit Lauderdale', tier: 'partner', logo: 'visit-lauderdale-josh.png', tile: 'light', url: null },
   {
     id: 'fl-beach-improvement',
     name: 'Fort Lauderdale Beach Improvement District',
@@ -70,7 +74,10 @@ export const sponsors: Sponsor[] = [
     { id: 'dole', name: 'Dole', tier: 'partner', logo: 'dole.png', tile: 'light', url: null },
     { id: '7-eleven', name: '7-Eleven', tier: 'partner', logo: '7-eleven.png', tile: 'light', url: null },
     { id: 'split-second-timing', name: 'Split Second Timing', tier: 'partner', logo: 'sst.png', tile: 'light', url: null },
-    // Pale script artwork — needs a dark tile.
+    // Pale cream script — legible only on a dark tile. On the all-white Partners
+  // wall it falls back to its name in type until the client supplies a
+  // dark/colour version. It still renders as a logo in the homepage marquee,
+  // which can give it the navy tile it needs.
   { id: 'wildside', name: 'WildSide', tier: 'partner', logo: 'wildside.png', tile: 'dark', url: null },
     { id: 'running-wild', name: 'Running Wild', tier: 'partner', logo: 'running-wild.png', tile: 'light', url: null },
 ]
@@ -82,6 +89,22 @@ export function sponsorsByTier(tier: SponsorTier): Sponsor[] {
 /** True once every sponsor has artwork — used to drop the text fallback. */
 export function allLogosSupplied(): boolean {
   return sponsors.every((s) => s.logo !== null)
+}
+
+/**
+ * Whether a sponsor's artwork can sit on a LIGHT tile.
+ *
+ * `tile: 'dark'` means the mark is reversed-out and needs a dark background,
+ * so a surface that only offers white tiles must fall back to the name in
+ * type rather than render an invisible logo. Currently WildSide only.
+ */
+export function isLightSafe(sponsor: Sponsor): boolean {
+  return sponsor.logo !== null && sponsor.tile === 'light'
+}
+
+/** Sponsors still awaiting light-surface artwork — for the pre-launch audit. */
+export function sponsorsAwaitingLightArtwork(): Sponsor[] {
+  return sponsors.filter((s) => !isLightSafe(s))
 }
 
 /** Brief §24: training partner, tracked separately from event sponsors. */
