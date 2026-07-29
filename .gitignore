@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+build/
+.DS_Store
+*.pem
+.env*.local
+.vercel
+next-env.d.ts
+*.tsbuildinfo
+
+# Review artefacts — regenerate with `node scripts/screenshot.mjs`
+.screenshots/
+
+# NOTE: media/ IS committed. It holds the normalised, size-checked images that
+# components static-import, so a clean checkout builds without running sharp.
+# Regenerate from assets/Photos with `npm run media`.

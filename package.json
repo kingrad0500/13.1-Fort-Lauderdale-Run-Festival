@@ -1,0 +1,43 @@
+{
+  "name": "fort-lauderdale-running-festival",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The 20th Annual Liquid Youth Fort Lauderdale Running Festival \u2014 November 8, 2026",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "media": "node scripts/optimize-media.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:data": "node scripts/check-data-integrity.mjs",
+    "check:lifecycle": "node scripts/check-lifecycle.mjs",
+    "shots": "node scripts/screenshot.mjs",
+    "prelaunch": "npm run typecheck && npm run check:data && npm run check:links && npm run check:contrast",
+    "video": "node scripts/optimize-video.mjs"
+  },
+  "dependencies": {
+    "framer-motion": "^12.43.0",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-use-measure": "^2.1.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "ffmpeg-static": "^5.3.0",
+    "playwright": "^1.62.0",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0"
+  },
+  "overrides": {
+    "postcss": "^8.5.23",
+    "sharp": "^0.35.3"
+  }
+}
