@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { RegisterButton } from '@/components/ui/RegisterButton'
 import { cn } from '@/lib/cn'
 
@@ -22,6 +22,7 @@ import { cn } from '@/lib/cn'
 export function StickyRegisterCTA() {
   const [pastHero, setPastHero] = useState(false)
   const [ctaVisible, setCtaVisible] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const hero = document.querySelector('[data-hero-sentinel]')
@@ -37,8 +38,19 @@ export function StickyRegisterCTA() {
 
   // Hide while another registration CTA occupies the lower viewport, so the
   // visitor never sees two competing registration buttons at once.
+  //
+  // CRITICAL: the bar's OWN button must be excluded. It carries
+  // `data-register-cta` like every other RegisterButton, so observing it
+  // creates a feedback loop — the bar appears, sees itself in the lower
+  // viewport, decides a competing CTA is visible, hides, no longer sees
+  // itself, reappears. Measured at 121 aria-hidden flips in 4 seconds while
+  // the page was completely stationary.
   useEffect(() => {
-    const ctas = document.querySelectorAll('[data-register-cta]')
+    const container = containerRef.current
+    const ctas = Array.from(
+      document.querySelectorAll('[data-register-cta]'),
+    ).filter((cta) => !container?.contains(cta))
+
     if (ctas.length === 0) return
 
     const visible = new Set<Element>()
@@ -61,6 +73,7 @@ export function StickyRegisterCTA() {
 
   return (
     <div
+      ref={containerRef}
       aria-hidden={!shown}
       className={cn(
         'fixed inset-x-0 bottom-0 z-40 lg:hidden',
