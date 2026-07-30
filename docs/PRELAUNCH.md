@@ -88,6 +88,15 @@ npm run check:lifecycle            # separate: rebuilds per mode
      white with a thin outline, so they read weakly on a white panel. The
      cheetah and red "WILD" carry the mark. Worth requesting a light-safe
      version alongside WildSide's.
+   - **Liquid Youth — true vector still wanted.** The SVG supplied on
+     30 Jul 2026 is not vector: it is a 2048×706 PNG inside an SVG wrapper with
+     a luminance mask, and contains no glyph paths. Its real artwork measures
+     **897 × 320px**, which is enough for the hero at 2× DPR but has no headroom
+     beyond it — and this is the title sponsor's mark, in the hero, so it is the
+     one that should be bulletproof. Ask the designer for the Illustrator/EPS
+     original, or an SVG **with the type converted to outlines rather than an
+     embedded image**. Baptist Health's equivalent is 3262 × 1142px and needs
+     nothing further.
 
 3. **`finisher.jpg` sign-off** — shows Cleveland Clinic and Life Time branding
    from 2019 against a 2026 Liquid Youth title sponsorship. Deliberately unused.

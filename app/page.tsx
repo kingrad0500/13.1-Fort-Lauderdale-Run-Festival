@@ -4,6 +4,7 @@ import { raceEventJsonLd, JsonLd } from '@/lib/jsonld'
 
 import { RegisterButton } from '@/components/ui/RegisterButton'
 import { HeroMedia } from '@/components/race/HeroMedia'
+import { HeroLockup } from '@/components/race/HeroLockup'
 import { RaceCard } from '@/components/race/RaceCard'
 import { RelayDiagram } from '@/components/race/RelayDiagram'
 import { BenefitList } from '@/components/race/BenefitList'
@@ -66,21 +67,24 @@ export default function HomePage() {
               </div>
 
               {/*
-                Mixed Fraunces headline — §4. Approved copy, verbatim.
-                Sized so "RUN INTO THE" holds ONE line at every breakpoint:
-                the intended shape is two lines, not three. Balance is off
-                because balancing a deliberately composed headline is wrong.
+                Identity lockup — §29.15. Replaced the campaign headline at the
+                client's direction so the title and presenting sponsors carry
+                the hero. See HeroLockup for the hierarchy reasoning.
               */}
-              <h1 className="mt-5 text-sand [text-wrap:initial] motion-safe:animate-[hero-enter_0.6s_var(--ease-out-soft)_0.1s_both]">
-                <span className="block text-[clamp(2.25rem,6.4vw,6rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.02em]">
-                  Run Into The
-                </span>
-                <span className="mt-1 block text-[clamp(3rem,9vw,7rem)] font-bold italic leading-[0.9] tracking-[-0.03em] text-gold">
-                  Sunrise
-                </span>
-              </h1>
+              <div className="motion-safe:animate-[hero-enter_0.6s_var(--ease-out-soft)_0.1s_both]">
+                <HeroLockup />
+              </div>
 
+              {/*
+                Approved §7.1 campaign copy, kept but demoted: it leads the lede
+                as a gold italic rather than occupying the headline. The hero now
+                reads identity → promise → action, and no approved copy was lost
+                to make room for the lockup.
+              */}
               <p className="measure mt-6 font-sans text-lg leading-relaxed text-sand/90 sm:text-xl motion-safe:animate-[hero-enter_0.6s_var(--ease-out-soft)_0.2s_both]">
+                <span className="font-display italic text-gold">
+                  Run into the sunrise.
+                </span>{' '}
                 Four ways to race. One unforgettable morning along Las Olas and
                 A1A.
               </p>

@@ -2,7 +2,7 @@
   "name": "fort-lauderdale-running-festival",
   "version": "0.1.0",
   "private": true,
-  "description": "The 20th Annual Liquid Youth Fort Lauderdale Running Festival \u2014 November 8, 2026",
+  "description": "The 20th Annual Liquid Youth Fort Lauderdale Running Festival — November 8, 2026",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,7 +16,8 @@
     "check:lifecycle": "node scripts/check-lifecycle.mjs",
     "shots": "node scripts/screenshot.mjs",
     "prelaunch": "npm run typecheck && npm run check:data && npm run check:links && npm run check:contrast",
-    "video": "node scripts/optimize-video.mjs"
+    "video": "node scripts/optimize-video.mjs",
+    "check:hero": "node scripts/check-hero-lockup.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.43.0",
