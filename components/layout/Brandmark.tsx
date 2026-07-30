@@ -81,19 +81,19 @@ export function Brandmark({
       </span>
 
       {/* Presenting partner, separated by a rule so the two marks never read
-          as one lockup. Hidden below md: at 640px the size bump and this
-          lockup both landed at sm and together overflowed the bar, so both
-          now wait for 768px. */}
+          as one lockup. Shown at EVERY width now that the Register button
+          steps aside on phones — the full lockup was the point of freeing
+          that space. */}
       <span
         aria-hidden="true"
         className={cn(
-          'hidden items-center gap-2.5 border-l pl-3 md:flex md:gap-3 md:pl-4',
+          'flex items-center gap-1 border-l pl-1.5 sm:gap-2.5 sm:pl-3 md:gap-3 md:pl-4',
           inverse ? 'border-sand/25' : 'border-navy/20',
         )}
       >
         <span
           className={cn(
-            'font-sans text-[0.5rem] font-bold uppercase leading-tight tracking-[0.14em]',
+            'font-sans text-[0.4375rem] font-bold uppercase leading-tight tracking-[0.1em] sm:text-[0.5rem] sm:tracking-[0.14em]',
             inverse ? 'text-sand/60' : 'text-navy/50',
           )}
         >
@@ -108,7 +108,7 @@ export function Brandmark({
           height={100}
           priority
           className={cn(
-            'h-auto w-[74px] object-contain lg:w-[86px]',
+            'h-auto w-[42px] object-contain sm:w-[64px] lg:w-[86px]',
             // The supplied mark is reversed-out white. On a light surface it
             // would vanish, so it is inverted rather than recoloured — the
             // artwork itself is never altered.

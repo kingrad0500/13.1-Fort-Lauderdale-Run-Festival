@@ -45,6 +45,12 @@ interface Props {
   srSuffix?: string
   /** Set to -1 when the CTA is visually hidden, so it leaves the tab order. */
   tabIndex?: number
+  /**
+   * NOTE: this cannot reliably override the component's own display or padding
+   * utilities — Tailwind resolves those by stylesheet order, not by class-string
+   * order. Use the `size` prop for padding, and a wrapper element for
+   * visibility. Both have already been learned the hard way.
+   */
   className?: string
 }
 

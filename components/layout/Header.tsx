@@ -205,9 +205,22 @@ export function Header() {
             })}
           </ul>
 
-          <RegisterButton source="header" size="sm">
-            Register
-          </RegisterButton>
+          {/*
+            Hidden on phones so the full identity lockup — sponsor mark, event
+            name and presenting partner — can be shown in full. Registration is
+            not lost: the sticky bottom bar covers every page (§14), and every
+            hero carries its own CTA. Client-directed.
+
+            Visibility lives on a WRAPPER, not on the button's className.
+            RegisterButton emits `inline-flex` itself, and a competing `hidden`
+            is another display utility — which of the two wins is decided by
+            stylesheet order, not class order, so it silently failed to hide.
+          */}
+          <div className="hidden md:block">
+            <RegisterButton source="header" size="sm">
+              Register
+            </RegisterButton>
+          </div>
 
           <button
             type="button"

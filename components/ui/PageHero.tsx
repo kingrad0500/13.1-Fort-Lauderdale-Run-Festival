@@ -39,6 +39,7 @@ export function PageHero({
   actions?: React.ReactNode
 }) {
   return (
+    <>
     <section className="page-shell pt-4">
       <div
         className={cn(
@@ -101,5 +102,14 @@ export function PageHero({
         </div>
       </div>
     </section>
+
+    {/*
+      Sentinel for the sticky mobile Register bar (§14). Without it the bar
+      watches for an element that does not exist and never appears at all —
+      which was true on every interior page until this was added. The homepage
+      has its own sentinel after its hero.
+    */}
+    <div data-hero-sentinel="" aria-hidden="true" className="h-px" />
+    </>
   )
 }
