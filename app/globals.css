@@ -223,6 +223,29 @@
   }
 }
 
+/*
+  Marquee track — see components/ui/Marquee.tsx.
+
+  Travels exactly -50% because the track holds two copies of its children, so
+  copy 2 lands where copy 1 began. Duration is set inline from the measured
+  width to keep a constant reading speed.
+*/
+@keyframes marquee-track {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  animation-name: marquee-track;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
 /* ==========================================================================
    Reduced motion — brief §16, §25.
    Reduced-motion users receive a static presentation, not a faster one.

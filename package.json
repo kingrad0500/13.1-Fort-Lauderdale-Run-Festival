@@ -17,7 +17,8 @@
     "shots": "node scripts/screenshot.mjs",
     "prelaunch": "npm run typecheck && npm run check:data && npm run check:links && npm run check:contrast",
     "video": "node scripts/optimize-video.mjs",
-    "check:hero": "node scripts/check-hero-lockup.mjs"
+    "check:hero": "node scripts/check-hero-lockup.mjs",
+    "check:ticker": "node scripts/check-ticker.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.43.0",
